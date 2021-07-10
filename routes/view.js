@@ -1,21 +1,18 @@
 const router = require('express').Router();
-const Workout = require('../models/workout.js');
-console.log ("in view");
+const path = require('path');
 
-router.get('/api/workouts', (request, response) => {
-    console.log('Inside View get');
-    Workout.find({}, (error, data) => {
-        if (error) {
-            response.status(500);
-            response.send(error.message);
-        } else {
-            console.log(response.json);
-        }
-    })
+router.get('/', (request, response) => {
+    console.log('Route View -  home');
+    response.sendFile(path.join(__dirname + '/../public/index.html'));
 })
-//  Workout.find({})
-//       .then(data => response.json(data))
-//      .then(console.log)
-//     .catch(error =>
-    //    );
+
+router.get('/exercise', (request, response) => {
+    console.log('Route View -  exercise');
+    response.sendFile(path.join(__dirname + '/../public/exercise.html'));
+})
+
+router.get('/stats', (request, response) => {
+    console.log('Route View - stats');
+    response.sendFile(path.join(__dirname + '/../public/stats.html'));
+})
 module.exports = router
