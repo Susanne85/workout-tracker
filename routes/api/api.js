@@ -3,19 +3,14 @@ const Workout = require('../../models/workout');
 
 router.get("/workouts", (request, response) => {
     console.log('Route /routes/api - get all workouts');
-    try {
-        const getWorkoutData = Workout.find({}, (error, data) => {
-            if (error) {
-                response.status(500);
-                response.send(error.message);
-            } else {
-                response.json(data);
-            }
-        })
-    } catch (error) {
-        response.status(500);
-        response.send(error.message);
-    }
+    const getWorkoutData = Workout.find({}, (error, data) => {
+        if (error) {
+            response.status(500);
+            response.send(error.message);
+        } else {
+            response.json(data);
+        }
+    })
 })
 
 router.put("/workouts/:id", (request, response) => {
