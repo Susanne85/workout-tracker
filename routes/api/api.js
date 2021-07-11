@@ -14,27 +14,19 @@ router.get("/workouts", (request, response) => {
 })
 
 router.put("/workouts/:id", (request, response) => {
-    console.log("Route api/workouts/:id - add new exercise", request.params.id);
+    console.log("Route api/workouts/:id - update exercise", request.params.id);
 });
-
-router.put("/workouts/", (request, response) => {
-    console.log("Route api/workouts/:id - add new exercise");
-})
 router.post("/workouts", (request, response) => {
-    console.log("Route api/workouts - add new exercise");
-    const exercise = request.body;
-    console.log("Exercise data, adding a new record", exercise);
-    const addOne = Workout.insertOne(request.body, (error, data) => {
+    console.log("Route api/workouts - add new exercise ", request.body);
+    const addOneDtls = Workout.insertMany(request.body, (error, data) => {
         if (error) {
             response.status(500);
             response.send(error.message);
         } else {
-            console.log('object type ', typeof data)
-            response.send(data);
+            response.json(data[0]);
         }
     });
 });
-
 
 router.get("/workouts/range", (request, response) => {
     console.log("Route api/workouts - workouts in range");
