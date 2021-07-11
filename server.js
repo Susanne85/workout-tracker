@@ -3,7 +3,6 @@ dotenv.config();
 const path = require('path');
 const express = require('express');
 const routes = require('./routes');
-
 const mongoose = require('mongoose');
 
 const app = express();
@@ -20,6 +19,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb:3000//localhost/workout", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false
 });
 
 

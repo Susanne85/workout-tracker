@@ -16,6 +16,7 @@ router.get("/workouts", (request, response) => {
 
 router.put("/workouts/:id", (request, response) => {
     console.log("Route api/workouts/:id - update exercise", request.params.id);
+    console.log("Route api/workouts/:id - update exercise", request.body);
 
     Workout.findByIdAndUpdate(
         request.params.id,
@@ -23,7 +24,15 @@ router.put("/workouts/:id", (request, response) => {
         { new: true, runValidators: true }
     )
         .then((dbWorkout) => {
-            response.json(dbWorkout);
+            Workout.aggregate([
+                { $match: { _id: mongojs.ObjectId(request.params.id) } },
+                { $addFields: { "totalduration": { $sum: "$duration" } } },
+                { $addFields: { "totalweight": { $sum: "$weight" } } },
+            ])
+                .then((dbCalcWorkout) => {
+                console.log('got to here',dbCalcWorkout);
+                response.json(dbCalcWorkout);
+            });
         })
         .catch((error) => {
             response.json(error);
