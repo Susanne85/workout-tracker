@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const mongojs = require('mongojs');
 const Workout = require('../../models/workout');
 
 router.get("/workouts", (request, response) => {
@@ -15,6 +16,18 @@ router.get("/workouts", (request, response) => {
 
 router.put("/workouts/:id", (request, response) => {
     console.log("Route api/workouts/:id - update exercise", request.params.id);
+
+    Workout.findByIdAndUpdate(
+        request.params.id,
+        { $push: { "exercises": request.body } },
+        { new: true, runValidators: true }
+    )
+        .then((dbWorkout) => {
+            response.json(dbWorkout);
+        })
+        .catch((error) => {
+            response.json(error);
+        });
 });
 router.post("/workouts", (request, response) => {
     console.log("Route api/workouts - add new exercise ", request.body);
