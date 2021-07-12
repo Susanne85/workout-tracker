@@ -4,7 +4,7 @@
 
 ## Description
 
-This is an applicaion in which a user can track their fitness workouts.  The user is able to record multiple exercise workouts in a data recording different data depending on the type of workout.  The application will also allow a user to update, delete or obtain summary information about their workout.
+This is an applicaion in which a user can track their fitness workouts.  The user is able to record multiple exercise workouts in a data recording different data depending on the type of workout.  The application will also allow a user to update, delete or obtain summary information about their workout.  From the dashboard the user will be able to retrieve statistics on their last seven workouts.
 
 ## 📖Table of Contents
 1. [Installation](#installation)
@@ -32,24 +32,31 @@ This is an applicaion in which a user can track their fitness workouts.  The use
     
 ## Usage
 Once the host, port, user, password and database details have been provided to the connection and the database has been created, navigate to the root directory for the application and run the following code in the terminal to start the application:
-
+When executing the application in Node, the environment (env file) requires the mongo connection in the format 'MONGODB_URI= mongodb+srv://your mongo user name:your mongo Atlas password@cluster0.hnbwz.mongodb.net/your database bane?retryWrites=true&w=majority'.  Replace 'your mongo user name, your mongo Atlass password and your database' with the appropriate values.  The second variable in the environment file should be 'PORT=value' replacing value with an appropriate connection value.
+ 
 ```js
 npm start
 ```
+To execute the application on Heroku requires configuration variables for the connection to MongoDb to be added.  Login to Heroku and then click on the Settings tab and then click on the Config vars and then add a key value pair,  the key is 'MONGODB_URI', the value is mongodb+srv://your mongo user name:your mongo Atlas password@cluster0.hnbwz.mongodb.net/your database bane?retryWrites=true&w=majority'.  Replace the variables as described above.
 
 ## Assets
 
-Live demo of the application hosted on Heroku:  
+Live demo of the application hosted on Heroku:  Workout Tracker](https://dashboard.heroku.com/apps/my-workout-2021)
 
 The following images shows the functionality of the application: 
 
- 
+![Home Page](./public/images/front-page.png)
+
+
+
+![DashBoard](./public/images/dashboard.png))
 
 
 ## Technologies
-- [Node.js](https://nodejs.org/en/docs/)
-- [dotenv](https://www.npmjs.com/package/dotenv)
+- [dotenv](https://www.npmjs.com/package/dotenv) 
 - [Express](https://expressjs.com/)
+- [Mongo](https://www.mongodb.com/)
+- [Node.js](https://nodejs.org/en/docs/)
 - [Nodemon](https://www.npmjs.com/package/nodemon)
 - JavaScript
 
@@ -60,11 +67,11 @@ This project is [MIT](./LICENSE) licensed
 ## Contributing
 Contributions, issues and feature requests are welcome.
 
-Feel free to check the [issues page](https://github.com/Susanne85/final-portfolio/issues) if you want to contribute.
+Feel free to check the [issues page](https://github.com/Susanne85/workout-tracker/issues) if you want to contribute.
 
 ## Tests
-There are no tests currently for this application.
 
+There are no tests currently for this application.
 
 ## Questions
 For any questions, please contact the author:
