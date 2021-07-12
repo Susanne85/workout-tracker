@@ -25,20 +25,20 @@ router.get("/workouts", (request, response) => {
 })
 
 router.put("/workouts/:id", (request, response) => {
-    console.log("Route api/workouts/:id - update exercise", request.params.id);
-    console.log("Route api/workouts/:id - update exercise", request.body);
+   // console.log("Route api/workouts/:id - update exercise", request.params.id + ' ' + request.body);
 
     Workout.findByIdAndUpdate(
         request.params.id,
         { $push: { "exercises": request.body } },
         { new: true, runValidators: true }
-    )
-        .then((dbWorkout) => {
-            response.json(dbWorkout);
+        , (error, dataFromFindAndUpdate) => {
+            if (error) {
+                response.status(500);
+                response.send(error.message);
+            } else {
+                response.json(dataFromFindAndUpdate);
+            }
         })
-        .catch((error) => {
-            response.json(error);
-        });
 });
 router.post("/workouts", (request, response) => {
     console.log("Route api/workouts - add new exercise ", request.body);
