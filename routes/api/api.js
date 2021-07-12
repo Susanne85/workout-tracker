@@ -42,12 +42,12 @@ router.put("/workouts/:id", (request, response) => {
 });
 router.post("/workouts", (request, response) => {
     console.log("Route api/workouts - add new exercise ", request.body);
-    const addOneDtls = Workout.insertMany(request.body, (error, data) => {
+    const addOneDtls = Workout.create(request.body, (error, workoutData) => {
         if (error) {
             response.status(500);
             response.send(error.message);
         } else {
-            response.json(data[0]);
+            response.json(workoutData);
         }
     });
 });
