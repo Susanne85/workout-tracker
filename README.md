@@ -41,7 +41,7 @@ To execute the application on Heroku requires configuration variables for the co
 
 ## Assets
 
-Live demo of the application hosted on Heroku:  Workout Tracker](https://dashboard.heroku.com/apps/my-workout-2021)
+Live demo of the application hosted on Heroku:  Workout Tracker](https://my-workout-2021.herokuapp.com/)
 
 The following images shows the functionality of the application: 
 
