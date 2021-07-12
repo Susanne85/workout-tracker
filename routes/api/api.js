@@ -9,7 +9,17 @@ router.get("/workouts", (request, response) => {
             response.status(500);
             response.send(error.message);
         } else {
-            response.json(data);
+            Workout.aggregate([
+                { $addFields: { "totalDuration": { $sum: "$exercises.duration" } } },
+                { $addFields: { "totalWeight": { $sum: "$exercises.weight" } } },
+            ])
+                .then((dbWorkout) => {
+                    console.log('here', dbWorkout);
+                    response.json(dbWorkout);
+                })
+                .catch((error) => {
+                    response.json(error);
+                });
         }
     })
 })
@@ -24,15 +34,7 @@ router.put("/workouts/:id", (request, response) => {
         { new: true, runValidators: true }
     )
         .then((dbWorkout) => {
-            Workout.aggregate([
-                { $match: { _id: mongojs.ObjectId(request.params.id) } },
-                { $addFields: { "totalduration": { $sum: "$duration" } } },
-                { $addFields: { "totalweight": { $sum: "$weight" } } },
-            ])
-                .then((dbCalcWorkout) => {
-                console.log('got to here',dbCalcWorkout);
-                response.json(dbCalcWorkout);
-            });
+            response.json(dbWorkout);
         })
         .catch((error) => {
             response.json(error);

@@ -7,10 +7,11 @@ var workoutSchema = new Schema({
   exercises: [{
   type: { type: String, required: true },
   name: { type: String, required: true },
-  duration: { type: String, required: true },
+  duration: { type: Number, required: true },
+  distance: { type: Number, required: false },
   weight: { type: Number, required: false },
   reps: { type: Number, required: false },
-  sets: { type: String, required: false },
+  sets: { type: Number, required: false },
   }]
 });
 
