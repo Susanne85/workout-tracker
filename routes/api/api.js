@@ -54,6 +54,18 @@ router.post("/workouts", (request, response) => {
 
 router.get("/workouts/range", (request, response) => {
     console.log("Route api/workouts - workouts in range");
+
+    const getWorkOutData = Workout.aggregate([
+        { $addFields: { "totalDuration": { $sum: "$exercises.duration" } } },
+        { "$limit": 7 }], (error, workoutData) => {
+            if (error) {
+                response.status(500);
+                response.send(error.message);
+            } else {
+                response.json(workoutData);
+            }
+        }
+    )
 })
 
 module.exports = router
