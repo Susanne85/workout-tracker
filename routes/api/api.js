@@ -57,7 +57,7 @@ router.get("/workouts/range", (request, response) => {
 
     const getWorkOutData = Workout.aggregate([
         { $addFields: { "totalDuration": { $sum: "$exercises.duration" } } },
-        { "$limit": 7 }], (error, workoutData) => {
+        { "$sort":{"day":-1}}, {"$limit": 7 }, { "$sort":{"day":1}}], (error, workoutData) => {
             if (error) {
                 response.status(500);
                 response.send(error.message);
