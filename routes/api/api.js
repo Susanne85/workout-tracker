@@ -3,7 +3,7 @@ const mongojs = require('mongojs');
 const Workout = require('../../models/workout');
 
 router.get("/workouts", (request, response) => {
-    console.log('Route /routes/api - get all workouts');
+   // console.log('Route /routes/api - get all workouts');
     const getWorkoutData = Workout.find({}, (error, data) => {
         if (error) {
             response.status(500);
@@ -12,20 +12,20 @@ router.get("/workouts", (request, response) => {
             Workout.aggregate([
                 { $addFields: { "totalDuration": { $sum: "$exercises.duration" } } },
                 { $addFields: { "totalWeight": { $sum: "$exercises.weight" } } },
-            ])
-                .then((dbWorkout) => {
-                    console.log('here', dbWorkout);
-                    response.json(dbWorkout);
-                })
-                .catch((error) => {
-                    response.json(error);
-                });
+            ], (error, dataFromFind) => {
+                if (error) {
+                    response.status(500);
+                    response.send(error.message);
+                } else {
+                    response.json(dataFromFind);
+                }
+            })
         }
     })
 })
 
 router.put("/workouts/:id", (request, response) => {
-   // console.log("Route api/workouts/:id - update exercise", request.params.id + ' ' + request.body);
+    // console.log("Route api/workouts/:id - update exercise", request.params.id + ' ' + request.body);
 
     Workout.findByIdAndUpdate(
         request.params.id,
@@ -41,7 +41,7 @@ router.put("/workouts/:id", (request, response) => {
         })
 });
 router.post("/workouts", (request, response) => {
-    console.log("Route api/workouts - add new exercise ", request.body);
+    //console.log("Route api/workouts - add new exercise ", request.body);
     const addOneDtls = Workout.create(request.body, (error, workoutData) => {
         if (error) {
             response.status(500);
@@ -53,7 +53,7 @@ router.post("/workouts", (request, response) => {
 });
 
 router.get("/workouts/range", (request, response) => {
-    console.log("Route api/workouts - workouts in range");
+    //console.log("Route api/workouts - workouts in range");
 
     const getWorkOutData = Workout.aggregate([
         { $addFields: { "totalDuration": { $sum: "$exercises.duration" } } },
